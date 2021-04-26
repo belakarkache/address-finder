@@ -45,13 +45,13 @@ body.body--dark {
         height: 200px;
     }
     .search {
-        top: 30px;
+        top: -40px;
     }
 }
 
 .search {
     position: absolute;
-    top: 430px;
+    top: 370px;
     width: 70%;
     border-radius: 15px;
     padding: 20px;
@@ -66,10 +66,15 @@ body.body--dark {
             border-radius: 10px;
         }
     }
-    .q-btn {
-        top: 12px;
-        margin-left: 10px;
-        font-size: 12px;
+    .actions {
+        text-align: right;
+        padding-right: 5px;
+        .q-btn {
+            margin-left: 10px;
+            border-radius: 10px;
+            height: 46px;
+            margin-top: 10px;
+        }
     }
     &__header {
         padding: 5px;

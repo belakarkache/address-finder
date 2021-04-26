@@ -17,7 +17,6 @@
           clearable
           class="col-md-2 col-xs-12"
         />
-        <p style="padding: 20px 10px">ou</p>
         <q-select
           clearable
           outlined
@@ -32,18 +31,20 @@
           @input="getCitiesList"
         />
         <q-select
-          clearable
           outlined
           v-model="addressData.city"
-          :options="cities"
+          :options="options"
           label="Cidade"
           option-label="nome"
           option-value="nome"
           key="id"
-          class="col-md-2 col-xs-12"
+          class="col-md-4 col-xs-12"
           :disable="!addressData.state"
           emit-value
           map-options
+          @filter="filterFn"
+          @filter-abort="abortFilterFn"
+          use-input
         />
         <q-input
           outlined
@@ -51,24 +52,24 @@
           v-model="addressData.street"
           label="Logradouro"
           clearable
-          class="col-md-3 col-xs-12"
+          class="col-md-4 col-xs-12"
         />
-        <span class="col-md-2 col-xs-12">
+
+        <div class="actions col-12">
           <q-btn
             unelevated
-            round
             color="secondary"
-            icon="fas fa-times"
+            label="Limpar resultados"
             @click="clearResults"
           />
+
           <q-btn
             unelevated
-            round
             color="primary"
-            icon="fas fa-search"
+            label="Buscar"
             @click="searchResults"
           />
-        </span>
+        </div>
       </div>
     </div>
 
@@ -105,6 +106,7 @@ export default {
       results: [],
       states: [],
       cities: [],
+      options: [],
     };
   },
   mounted() {
@@ -129,7 +131,7 @@ export default {
             const isArray = Array.isArray(resp);
             if (resp.length > 0) {
               this.results = resp;
-            } else if (!resp || resp.erro) {
+            } else if (resp.length === 0 || resp.erro) {
               this.$q.notify({
                 message: "Não foram encontrados resultados para a busca",
                 color: "negative",
@@ -156,7 +158,7 @@ export default {
             const isArray = Array.isArray(resp);
             if (resp.length > 0) {
               this.results = resp;
-            } else if (!resp || resp.erro) {
+            } else if (resp.length === 0 || resp.erro) {
               this.$q.notify({
                 message: "Não foram encontrados resultados para a busca",
                 color: "negative",
@@ -189,7 +191,21 @@ export default {
       };
     },
     getCitiesList() {
-      getCities(this.addressData.state).then((resp) => (this.cities = resp));
+      getCities(this.addressData.state).then((resp) => {
+        this.cities = resp;
+        this.options = this.cities;
+      });
+    },
+    filterFn(val, update) {
+      update(() => {
+        const needle = val.toLowerCase();
+        this.options = this.cities.filter(
+          (v) => v.nome.toLowerCase().indexOf(needle) > -1
+        );
+      });
+    },
+    abortFilterFn() {
+      this.options = this.cities;
     },
   },
 };
