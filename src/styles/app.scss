@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Thasadith&display=swap');
+@import './quasar.sass';
+
+* {
+    font-family: 'Thasadith', sans-serif;
+    font-weight: bold;
+}
+
+body.body--light {
+    background-color: #f0f0f0;
+    .page-header {
+        background-image: url('../assets/images/day.jpeg');
+    }
+    .search, .result-card{
+        background: white;
+    }
+}
+
+body.body--dark {
+    $cards-background: $dark;
+    .page-header {
+        background-image: url('../assets/images/night.jpeg');
+    }
+    .search, .result-card {
+        background: $dark;
+    }
+}
+
+.page-header {
+    background-size: cover;
+    background-position: center;
+    height: 600px;
+    position: relative;
+    transition: 0.4s ease;
+    .q-toggle {
+        float: right;
+        margin-right: 20px;
+        margin-top: 10px;
+    }
+}
+
+.results-modifier {
+    transition: 0.4s ease;
+    .page-header {
+        height: 200px;
+    }
+    .search {
+        top: 30px;
+    }
+}
+
+.search {
+    position: absolute;
+    top: 430px;
+    width: 70%;
+    border-radius: 15px;
+    padding: 20px;
+    left: 50%;
+    transform: translate(-50%,50%);
+    label.q-field {
+        padding: 5px;
+        .fa-times-circle {
+            font-size: 1rem;
+        }
+        .q-field__control {
+            border-radius: 10px;
+        }
+    }
+    .q-btn {
+        top: 12px;
+        margin-left: 10px;
+        font-size: 12px;
+    }
+    &__header {
+        padding: 5px;
+        &-title {
+            margin: 0;
+        }
+    }
+}
+
+.q-notifications__list {
+    span {
+        color: white;
+    }
+}
+
+.display-results {
+    margin-top: 140px;
+    .result-card {
+        width: 80%;
+        display: block;
+        margin: 40px auto;
+        border-radius: 15px;
+        padding: 10px;
+        h4 {
+            margin: 14px;
+        }
+    }
+}
